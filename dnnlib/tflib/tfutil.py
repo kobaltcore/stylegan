@@ -129,7 +129,10 @@ def create_session(config_dict: dict = None, force_as_default: bool = False) -> 
     """Create tf.Session based on config dict."""
     # Setup TensorFlow config proto.
     cfg = _sanitize_tf_config(config_dict)
-    config_proto = tf.ConfigProto()
+
+    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=1.2)
+    config_proto = tf.ConfigProto(gpu_options=gpu_options)
+
     for key, value in cfg.items():
         fields = key.split(".")
         if fields[0] not in ["rnd", "env"]:
