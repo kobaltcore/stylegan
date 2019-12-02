@@ -83,7 +83,7 @@ def draw_noise_detail_figure(png, Gs, w, h, num_samples, seeds):
     canvas = PIL.Image.new('RGB', (w * 3, h * len(seeds)), 'white')
     for row, seed in enumerate(seeds):
         latents = np.stack([np.random.RandomState(seed).randn(Gs.input_shape[1])] * num_samples)
-        images = Gs.run(latents, None, truncation_psi=1, **synthesis_kwargs)
+        images = Gs.run(latents, None, **synthesis_kwargs)
         canvas.paste(PIL.Image.fromarray(images[0], 'RGB'), (0, row * h))
         for i in range(4):
             crop = PIL.Image.fromarray(images[i + 1], 'RGB')
